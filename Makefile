@@ -37,7 +37,7 @@ source:
 
 build: submodule source
 	rm -rf $(BUILD_DIR)
-	cp -R $(SOURCE_DIR) $(BUILD_DIR)
+	cp -R $(SOURCE_PATH) $(BUILD_DIR)
 	cd $(BUILD_DIR) && ./autogen.sh
 	cd $(BUILD_DIR) && CC=musl-gcc CFLAGS='$(CFLAGS)' ./configure $(PATH_FLAGS) $(CONF_FLAGS)
 	cd $(BUILD_DIR) && make && make DESTDIR=$(RELEASE_DIR) install
