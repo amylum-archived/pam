@@ -12,7 +12,7 @@ PACKAGE_VERSION = $$(git --git-dir=upstream/.git describe --tags | cut -d'-' -f3
 PATCH_VERSION = $$(cat version)
 VERSION = $(PACKAGE_VERSION)-$(PATCH_VERSION)
 
-SOURCE_URL = https://linux-pam.org/library/Linux-PAM-$(PACKAGE_VERSION).tar.bz2
+SOURCE_URL = http://linux-pam.org/library/Linux-PAM-$(PACKAGE_VERSION).tar.bz2
 SOURCE_PATH = /tmp/source
 SOURCE_TARBALL = /tmp/source.tar.gz
 
