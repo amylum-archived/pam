@@ -1,8 +1,6 @@
 PACKAGE = pam
 ORG = amylum
 
-DEP_DIR = /tmp/dep-dir
-
 BUILD_DIR = /tmp/$(PACKAGE)-build
 RELEASE_DIR = /tmp/$(PACKAGE)-release
 RELEASE_FILE = /tmp/$(PACKAGE).tar.gz
@@ -14,7 +12,11 @@ PACKAGE_VERSION = $$(git --git-dir=upstream/.git describe --tags | cut -d'-' -f3
 PATCH_VERSION = $$(cat version)
 VERSION = $(PACKAGE_VERSION)-$(PATCH_VERSION)
 
-.PHONY : default submodule manual container build version push local
+SOURCE_URL = https://linux-pam.org/library/Linux-PAM-$(PACKAGE_VERSION).tar.bz2
+SOURCE_PATH = /tmp/source
+SOURCE_TARBALL = /tmp/source.tar.gz
+
+.PHONY : default submodule source manual container build version push local
 
 default: submodule container
 
@@ -27,9 +29,15 @@ manual: submodule
 container:
 	./meta/launch
 
-build: submodule
+source:
+	rm -rf $(SOURCE_PATH) $(SOURCE_TARBALL)
+	mkdir $(SOURCE_PATH)
+	curl -sLo $(SOURCE_TARBALL) $(SOURCE_URL)
+	tar -x -C $(SOURCE_PATH) -f $(SOURCE_TARBALL) --strip-components=1
+
+build: submodule source
 	rm -rf $(BUILD_DIR)
-	cp -R upstream $(BUILD_DIR)
+	cp -R $(SOURCE_DIR) $(BUILD_DIR)
 	cd $(BUILD_DIR) && ./autogen.sh
 	cd $(BUILD_DIR) && CC=musl-gcc CFLAGS='$(CFLAGS)' ./configure $(PATH_FLAGS) $(CONF_FLAGS)
 	cd $(BUILD_DIR) && make && make DESTDIR=$(RELEASE_DIR) install
