@@ -5,39 +5,33 @@ BUILD_DIR = /tmp/$(PACKAGE)-build
 RELEASE_DIR = /tmp/$(PACKAGE)-release
 RELEASE_FILE = /tmp/$(PACKAGE).tar.gz
 PATH_FLAGS = --prefix=/usr --sbindir=/usr/bin --sysconfdir=/etc
-CONF_FLAGS =
+CONF_FLAGS = --enable-regenerate-docu
 CFLAGS = -static -static-libgcc -Wl,-static -lc
 
 PACKAGE_VERSION = $$(git --git-dir=upstream/.git describe --tags | cut -d'-' -f3 | sed 's/_/./g')
 PATCH_VERSION = $$(cat version)
 VERSION = $(PACKAGE_VERSION)-$(PATCH_VERSION)
 
-SOURCE_URL = http://linux-pam.org/library/Linux-PAM-$(PACKAGE_VERSION).tar.bz2
-SOURCE_PATH = /tmp/source
-SOURCE_TARBALL = /tmp/source.tar.gz
-
-.PHONY : default submodule source manual container build version push local
+.PHONY : default submodule manual build_container container build version push local
 
 default: submodule container
 
 submodule:
 	git submodule update --init
 
-manual: submodule
+build_container:
+	docker build -t pam-pkg meta
+
+manual: submodule build_container
 	./meta/launch /bin/bash || true
 
-container:
+container: build_container
 	./meta/launch
 
-source:
-	rm -rf $(SOURCE_PATH) $(SOURCE_TARBALL)
-	mkdir $(SOURCE_PATH)
-	curl -sLo $(SOURCE_TARBALL) $(SOURCE_URL)
-	tar -x -C $(SOURCE_PATH) -f $(SOURCE_TARBALL) --strip-components=1
-
-build: submodule source
+build: submodule
 	rm -rf $(BUILD_DIR)
-	cp -R $(SOURCE_PATH) $(BUILD_DIR)
+	cp -R upstream $(BUILD_DIR)
+	cd $(BUILD_DIR) && ./autogen.sh
 	cd $(BUILD_DIR) && CC=musl-gcc CFLAGS='$(CFLAGS)' ./configure $(PATH_FLAGS) $(CONF_FLAGS)
 	cd $(BUILD_DIR) && make && make DESTDIR=$(RELEASE_DIR) install
 	mkdir -p $(RELEASE_DIR)/usr/share/licenses/$(PACKAGE)
