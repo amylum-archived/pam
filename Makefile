@@ -4,7 +4,7 @@ ORG = amylum
 BUILD_DIR = /tmp/$(PACKAGE)-build
 RELEASE_DIR = /tmp/$(PACKAGE)-release
 RELEASE_FILE = /tmp/$(PACKAGE).tar.gz
-PATH_FLAGS = --prefix=/usr --sbindir=/usr/bin --sysconfdir=/etc
+PATH_FLAGS = --prefix=/usr --sbindir=/usr/bin --sysconfdir=/etc --libdir=/usr/lib
 CONF_FLAGS = --enable-regenerate-docu
 CFLAGS = -static -static-libgcc -Wl,-static -lc
 
@@ -31,6 +31,11 @@ container: build_container
 build: submodule
 	rm -rf $(BUILD_DIR)
 	cp -R upstream $(BUILD_DIR)
+	patch -d $(BUILD_DIR) -p1 < patches/fix-libcrypt.patch
+	patch -d $(BUILD_DIR) -p1 < patches/fix-compat.patch
+	patch -d $(BUILD_DIR) -p1 < patches/libpam-fix-build-with-eglibc-2.16.patch
+	patch -d $(BUILD_DIR) -p1 < patches/linux-pam-innetgr.patch
+	patch -d $(BUILD_DIR) -p1 < patches/musl-fix-pam_exec.patch
 	cd $(BUILD_DIR) && ./autogen.sh
 	cd $(BUILD_DIR) && CC=musl-gcc CFLAGS='$(CFLAGS)' ./configure $(PATH_FLAGS) $(CONF_FLAGS)
 	cd $(BUILD_DIR) && make && make DESTDIR=$(RELEASE_DIR) install
