@@ -53,6 +53,7 @@ deps:
 build: submodule deps
 	rm -rf $(BUILD_DIR)
 	cp -R upstream $(BUILD_DIR)
+	sed -e 's/pam_rhosts//g' -i $(BUILD_DIR)/modules/Makefile.am
 	patch -d $(BUILD_DIR) -p1 < patches/fix-libcrypt.patch
 	patch -d $(BUILD_DIR) -p1 < patches/fix-compat.patch
 	patch -d $(BUILD_DIR) -p1 < patches/libpam-fix-build-with-eglibc-2.16.patch
