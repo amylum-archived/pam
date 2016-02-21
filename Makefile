@@ -18,6 +18,12 @@ LIBTIRPC_TAR = /tmp/libtirpc.tar.gz
 LIBTIRPC_DIR = /tmp/libtirpc
 LIBTIRPC_PATH = -I$(LIBTIRPC_DIR)/usr/include -L$(LIBTIRPC_DIR)/usr/lib
 
+KRB5_VERSION = 1.14-3
+KRB5_URL = https://github.com/amylum/krb5/releases/download/$(KRB5_VERSION)/krb5.tar.gz
+KRB5_TAR = /tmp/krb5.tar.gz
+KRB5_DIR = /tmp/krb5
+KRB5_PATH = -I$(KRB5_DIR)/usr/include -L$(KRB5_DIR)/usr/lib
+
 .PHONY : default submodule manual build_container container deps build version push local
 
 default: submodule container
@@ -39,6 +45,10 @@ deps:
 	mkdir $(LIBTIRPC_DIR)
 	curl -sLo $(LIBTIRPC_TAR) $(LIBTIRPC_URL)
 	tar -x -C $(LIBTIRPC_DIR) -f $(LIBTIRPC_TAR)
+	rm -rf $(KRB5_DIR) $(KRB5_TAR)
+	mkdir $(KRB5_DIR)
+	curl -sLo $(KRB5_TAR) $(KRB5_URL)
+	tar -x -C $(KRB5_DIR) -f $(KRB5_TAR)
 
 build: submodule deps
 	rm -rf $(BUILD_DIR)
@@ -49,7 +59,7 @@ build: submodule deps
 	patch -d $(BUILD_DIR) -p1 < patches/linux-pam-innetgr.patch
 	patch -d $(BUILD_DIR) -p1 < patches/musl-fix-pam_exec.patch
 	cd $(BUILD_DIR) && ./autogen.sh
-	cd $(BUILD_DIR) && CC=musl-gcc CFLAGS='$(CFLAGS) $(LIBTIRPC_PATH)' ./configure $(PATH_FLAGS) $(CONF_FLAGS)
+	cd $(BUILD_DIR) && CC=musl-gcc CFLAGS='$(CFLAGS) $(LIBTIRPC_PATH) $(KRB5_PATH)' ./configure $(PATH_FLAGS) $(CONF_FLAGS)
 	cd $(BUILD_DIR) && make && make DESTDIR=$(RELEASE_DIR) install
 	mkdir -p $(RELEASE_DIR)/usr/share/licenses/$(PACKAGE)
 	cp $(BUILD_DIR)/COPYING $(RELEASE_DIR)/usr/share/licenses/$(PACKAGE)/LICENSE
