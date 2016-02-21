@@ -12,7 +12,7 @@ PACKAGE_VERSION = $$(git --git-dir=upstream/.git describe --tags | cut -d'-' -f3
 PATCH_VERSION = $$(cat version)
 VERSION = $(PACKAGE_VERSION)-$(PATCH_VERSION)
 
-LIBTIRPC_VERSION = 2.4.2-3
+LIBTIRPC_VERSION = 1.0.1-1
 LIBTIRPC_URL = https://github.com/amylum/libtirpc/releases/download/$(LIBTIRPC_VERSION)/libtirpc.tar.gz
 LIBTIRPC_TAR = /tmp/libtirpc.tar.gz
 LIBTIRPC_DIR = /tmp/libtirpc
