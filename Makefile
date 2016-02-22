@@ -6,7 +6,7 @@ RELEASE_DIR = /tmp/$(PACKAGE)-release
 RELEASE_FILE = /tmp/$(PACKAGE).tar.gz
 PATH_FLAGS = --prefix=/usr --sbindir=/usr/bin --sysconfdir=/etc --libdir=/usr/lib
 CONF_FLAGS = --enable-regenerate-docu
-CFLAGS =
+CFLAGS = -L/usr/lib/musl/lib
 
 PACKAGE_VERSION = $$(git --git-dir=upstream/.git describe --tags | cut -d'-' -f3 | sed 's/_/./g')
 PATCH_VERSION = $$(cat version)
