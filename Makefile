@@ -54,10 +54,7 @@ build: submodule deps
 	rm -rf $(BUILD_DIR)
 	cp -R upstream $(BUILD_DIR)
 	sed -e 's/pam_rhosts//g' -i $(BUILD_DIR)/modules/Makefile.am
-	patch -d $(BUILD_DIR) -p1 < patches/fix-libcrypt.patch
 	patch -d $(BUILD_DIR) -p1 < patches/fix-compat.patch
-	patch -d $(BUILD_DIR) -p1 < patches/libpam-fix-build-with-eglibc-2.16.patch
-	patch -d $(BUILD_DIR) -p1 < patches/linux-pam-innetgr.patch
 	patch -d $(BUILD_DIR) -p1 < patches/musl-fix-pam_exec.patch
 	cd $(BUILD_DIR) && ./autogen.sh
 	cd $(BUILD_DIR) && CC=musl-gcc CFLAGS='$(CFLAGS) $(LIBTIRPC_PATH) $(KRB5_PATH)' ./configure $(PATH_FLAGS) $(CONF_FLAGS)
