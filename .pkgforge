@@ -1,0 +1,34 @@
+name 'pam'
+org 'amylum'
+
+licenses 'COPYING'
+
+deps(
+  libtirpc: '1.0.1-2',
+  krb5: '1.14-3'
+)
+
+configure_flags(
+  prefix: '/usr',
+  sbindir: '/usr/bin',
+  sysconfdir: '/etc',
+  libdir: '/usr/lib',
+  'enable-regenerate-docu': nil
+)
+
+harden
+
+patch 'fix-compat.patch'
+patch 'musl-fix-pam_exec.patch'
+patch 'pam_rhosts_fix.patch'
+
+build do
+  run './autogen.sh'
+  configure
+  make
+  install
+end
+
+test do
+  # TODO: add tests
+end
