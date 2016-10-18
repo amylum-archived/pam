@@ -17,6 +17,7 @@ configure_flags(
 )
 
 cflags
+cflags ['-L/usr/lib/musl/lib']
 harden
 
 patch 'fix-compat.patch'
