@@ -16,6 +16,7 @@ configure_flags(
   'enable-regenerate-docu': nil
 )
 
+cflags
 harden
 
 patch 'fix-compat.patch'
