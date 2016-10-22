@@ -4,8 +4,8 @@ org 'amylum'
 licenses 'COPYING'
 
 deps(
-  libtirpc: '1.0.1-2',
-  krb5: '1.14-3'
+  libtirpc: '1.0.1-3',
+  krb5: '1.14.3-6'
 )
 
 configure_flags(
