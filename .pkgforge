@@ -4,7 +4,7 @@ org 'amylum'
 licenses 'COPYING'
 
 deps(
-  libtirpc: '1.0.1-8',
+  libtirpc: '1.0.1-9',
   krb5: '1.15-1',
   openssl: '1.0.2j-1'
 )
