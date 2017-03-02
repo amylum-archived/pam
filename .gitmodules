@@ -1,6 +1,6 @@
 [submodule "upstream"]
 	path = upstream
-	url = https://git.fedorahosted.org/git/linux-pam.git
+	url = https://github.com/linux-pam/linux-pam.git
 [submodule "meta"]
 	path = meta
 	url = git://github.com/amylum/pkgforge-helper
