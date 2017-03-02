@@ -3,9 +3,9 @@ Prospectus.extra_dep('file', 'prospectus_pkgforge')
 
 item do
   expected do
-    url_xpath
-    url 'https://git.fedorahosted.org/cgit/linux-pam.git/refs/tags'
-    xpath '//*[@id="cgit"]/div/table/tr[2]/td[1]/a'
+    github_tag
+    repo 'linux-pam/linux-pam'
+    filter /^Linux-PAM-([\d.]+)$/
     regex /^Linux-PAM-([\d.]+)$/
   end
 
