@@ -4,9 +4,18 @@ org 'amylum'
 licenses 'COPYING'
 
 deps(
-  libtirpc: '1.0.2-1',
-  krb5: '1.15.1-1',
-  openssl: '1.0.2l-1'
+  libtirpc: {
+    version: '1.0.2-1',
+    checksum: '8133a6860a5e11153287934735445e344cc2cea6ee874f08dd67302ef58730c6'
+  },
+  krb5: {
+    version: '1.15.1-1',
+    checksum: 'edf36e1eefe1d581e84efc7f7038389024a35fdf1da07c7f56b3d0ef6c19a8ba'
+  },
+  openssl: {
+    version: '1.0.2l-1',
+    checksum: '6a46a1a65aa5cadc69a2b01e3ef8fa0a38353f3f7b86c1a772ab5156dd5b2264'
+  }
 )
 
 configure_flags(
