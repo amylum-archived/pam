@@ -5,8 +5,8 @@ licenses 'COPYING'
 
 deps(
   libtirpc: {
-    version: '1.0.2-9',
-    checksum: 'f46a88198581e39f1a9cd9561f36e6604f6c4383f11999cd7d2c9744449fb4ed'
+    version: '1.0.3-1',
+    checksum: 'dcde537e65580cb3571850700f8c36b82a2f3e73a4d590e2de03f874f36cf4f7'
   },
   krb5: {
     version: '1.16-1',
