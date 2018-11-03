@@ -9,8 +9,8 @@ deps(
     checksum: '2985077bced9917963a427036bf5d8e2ceba61287fb3b980675cb0083791691b'
   },
   krb5: {
-    version: '1.16.1-1',
-    checksum: '4538754807eedb74cdde85e804142226ba577e346dd48768e1a824720eb3a412'
+    version: '1.16.2-1',
+    checksum: '12ad301f220ddc825bf126c5da77ff1c891a02764addea7ed00b1b0cfcb255c3'
   },
   openssl: {
     version: '1.1.0i-3',
