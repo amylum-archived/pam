@@ -5,16 +5,16 @@ licenses 'COPYING'
 
 deps(
   libtirpc: {
-    version: '1.1.4-7',
-    checksum: '5815d05842416fb652810d75811008ec4c62501d14a02c6270d7b344e0adcb24'
+    version: '1.1.4-8',
+    checksum: 'e73b0ba04161c6470e31c375c23fc0e1facc63f73ba2e7bed2f5ced8e23d8d52'
   },
   krb5: {
     version: '1.17-1',
     checksum: 'd7d59b6e90ca9de7475372058ace661f64d4b59abdf9ccf8a764b8546dd7099f'
   },
   openssl: {
-    version: '1.1.1a-1',
-    checksum: '70b9b57ef55293a4df4cc18776dc56d77d78856960bcc6571f8a009f00faf266'
+    version: '1.1.1b-2',
+    checksum: '9a0aec136778a436d542ef037914e0b7a572c9b6fe4c4f826e5f1a4531ce6799'
   }
 )
 
